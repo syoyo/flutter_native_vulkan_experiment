@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
+import 'dart:ffi';  // For FFI
+import 'dart:io';   // For Platform.isX
+
 // plugins
 import 'package:permission_handler/permission_handler.dart';
+
+final DynamicLibrary nativeAddLib =
+  Platform.isAndroid
+    ? DynamicLibrary.open("/data/data/com.example.flutter_native_vulkan_experiment/files/libnative_add.so")
+    : DynamicLibrary.process();
+
+final int Function(int x, int y) vulkanInit =
+  nativeAddLib
+    .lookup<NativeFunction<Int32 Function(Int32, Int32)>>("native_add")
+    .asFunction();
 
 void main() => runApp(MyApp());
 
@@ -63,6 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    //var r = vulkanInit(1, 3);
+    print(vulkanInit(1, 2));
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
