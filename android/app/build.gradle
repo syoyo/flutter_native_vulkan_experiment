@@ -46,7 +46,7 @@ android {
 
         externalNativeBuild {
            cmake {
-             arguments "-DANDROID_STL=c++_shared"
+             arguments "-DANDROID_STL=c++_shared", "-DANDROID_DISABLE_RELRO=On", "-DANDROID_ARM_MODE=arm"
            }
         }
     }
@@ -63,7 +63,7 @@ android {
        // Encapsulates your CMake build configurations.
        cmake {
          // Provides a relative path to your CMake build script.
-         path "CMakeLists.txt"
+         path "../../native/CMakeLists.txt"
        }
     }
 }
